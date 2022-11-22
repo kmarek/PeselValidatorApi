@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TodoApi</name>
+    </assembly>
+    <members>
+        <member name="T:TodoApi.Controllers.PeselController">
+            <summary>
+            Controller responsible for validating PESEL number
+            </summary>    
+        </member>
+        <member name="M:TodoApi.Controllers.PeselController.Validate(System.String)">
+            <summary>
+            Validate PESEL number
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET api/Pesel?pesel=12312312312
+                
+            </remarks>
+            <param name="pesel"></param>
+            <returns>Deleted item</returns>
+            <response code="200">Returns validation results.
+            
+            If PESEL is VALID, Date of birth and gender is also returned.
+            If PESEL is INVALID, proper error list is returned.
+            
+            Example of response for VALID PESEL
+            {
+                "pesel": "48100779844",
+                "isValid": true,
+                "dateOfBirth": "1948-10-07T00:00:00",
+                "gender": "Female",
+                "errors": []
+            }
+            
+            Example of response for INVALID PESEL
+            {
+                "pesel": "123",
+                "isValid": false,
+                "dateOfBirth": null,
+                "gender": null,
+                "errors": [
+                    {
+                        "errorCode": "INVL",
+                        "errorMessage": "Invalid length. Pesel should have exactly 11 digits."
+                    }
+                ]
+             }
+             
+            Possible Error codes and corresponding messages:
+            "INVL", "Invalid length. Pesel should have exactly 11 digits.
+            "NBRQ", "Invalid characters. Pesel should be a number."
+            "INVY", "Invalid year."
+            "INVM", "Invalid month."
+            "INVD", "Invalid day."
+            "INVC", "Check sum is invalid. Check last digit."
+            
+            </response>    
+            <response code="400">If missing PESEL argument</response>   
+        </member>
+        <member name="M:TodoApi.Controllers.TodoController.#ctor(TodoApi.Models.TodoContext)">
+            <summary>
+            Controller responsible for managing ToDo items
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:TodoApi.Controllers.TodoController.GetTodoItem">
+            <summary>
+            Get all items.
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET api/ToDo
+                
+            </remarks>
+            <returns>Deleted item</returns>
+            <response code="200">Returns all items</response>    
+        </member>
+        <member name="M:TodoApi.Controllers.TodoController.GetTodoItem(System.Int64)">
+            <summary>
+            Get item by id.
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET api/ToDo/1
+                
+            </remarks>
+            <param name="id"></param>
+            <returns>Get item</returns>
+            <response code="200">Return item</response>    
+            <response code="404">If item does not exist.</response>  
+        </member>
+        <member name="M:TodoApi.Controllers.TodoController.PutTodoItem(System.Int64,TodoApi.Models.TodoItem)">
+            <summary>
+            Update item by id.
+            </summary>
+            <remarks>
+            Sample request:
+            
+                PUT api/ToDo/1
+                {    
+                  "Name":"some name",
+                  "IsComplete":false
+                }
+            </remarks>
+            <param name="id"></param>
+            <param name="todoItem"></param>
+            <response code="200">Return item</response>  
+            <response code="400">If Id in URL does not match Id in body.</response>    
+            <response code="404">If item does not exist.</response>  
+        </member>
+        <member name="M:TodoApi.Controllers.TodoController.PostTodoItem(TodoApi.Models.TodoItem)">
+            <summary>
+            Add new item
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST api/ToDo
+                {        
+                  "Name":"some name",
+                  "IsComplete":false
+                }
+            </remarks>
+            <param name="todoItem"></param>
+            <returns>Added item</returns>
+            <response code="201">Returns added item</response>
+            <response code="400">If body is incorrect</response>
+        </member>
+        <member name="M:TodoApi.Controllers.TodoController.DeleteTodoItem(System.Int64)">
+            <summary>
+            Delete an item by Id.
+            </summary>
+            <remarks>
+            Sample request:
+            
+                DELETE api/ToDo/1
+                
+            </remarks>
+            <param name="id"></param>
+            <returns>Deleted item</returns>
+            <response code="200">Returns deleted item</response>    
+            <response code="403">If the item has id = 1</response> 
+            <response code="404">If the item does not exist</response>  
+        </member>
+    </members>
+</doc>
